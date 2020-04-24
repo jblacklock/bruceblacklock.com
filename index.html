@@ -93,6 +93,12 @@
     .reportCell {
         text-align: center;
     }
+
+    
+    #report th{
+        border-bottom: 3px solid white;
+        width: 130px;
+    }
 </style>
 
 <head>
@@ -204,10 +210,9 @@
         document.getElementById("tableDIV").innerHTML = `
         <table id="report" style="display:none">
             <tr>
-                <td>Question</td>
-                <td>Correct Answer</td>
-                <td>Your Answered</td>
-                <td>Points</td>
+                <th>Question</th>
+                <th>Your Answered</th>
+                <th>Points</th>
             </tr>
         </table>`
 
@@ -253,14 +258,11 @@
         var table = document.getElementById("report");
         var row = table.insertRow(numberOfQuestions)
         var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        cell1.innerHTML = question;
-        cell2.innerHTML = answer;
+        var cell3 = row.insertCell(1);
+        var cell4 = row.insertCell(2);
+        cell1.innerHTML = question + " = " + answer;
         cell3.innerHTML = studentAnswer;
         cell1.className = "reportCell"
-        cell2.className = "reportCell"
         cell3.className = "reportCell"
         cell4.className = "reportCell"
 
@@ -285,10 +287,31 @@
 
     function validate() {
         clearInterval(timerInterval);
+
+        var minutes = Math.floor(timePassed / 60);
+        var seconds = timePassed - minutes * 60;
+        var finalTime;
+        if (minutes > 0) {
+            if (minutes > 1) {
+                finalTime = minutes + " minutes";
+            }
+            else {
+                finalTime = minutes + " minute";
+            }
+            if (seconds > 0) {
+                finalTime.concat(" and " + seconds + " seconds");
+            }
+        }
+        else {
+            finalTime = seconds + " seconds"
+        }
+        var nexter = numberInQuestion + 1;
         if (numberCorrect >= 14) {
-            document.getElementById("result").innerHTML = "YOU PASSED WITH " + numberCorrect + "/15 ("+(numberCorrect/numberOfQuestions*100)+"%) <br> Completion Time: "+timePassed; 
+            document.getElementById("result").innerHTML = "YOU PASSED WITH " + numberCorrect + "/15 (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Completion Time: " + finalTime + "<br> Next time try your " + (nexter) + "s";
             document.getElementById("result").style.display = "block";
+
             document.getElementById("After").innerHTML = "NEXT";
+
             passed = true;
             // document.getElementById("After").addEventListener("click", function () {
             //     document.getElementById("report").remove();
@@ -296,7 +319,7 @@
             // });
         }
         else {
-            document.getElementById("result").innerHTML = "YOU FAILED: " + numberCorrect + "/15 ("+(numberCorrect/numberOfQuestions*100)+"%) <br> Completion Time: "+timePassed;
+            document.getElementById("result").innerHTML = "YOU FAILED: " + numberCorrect + "/15 (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Completion Time: " + finalTime;
             document.getElementById("result").style.display = "block";
             document.getElementById("After").innerHTML = "RETRY";
             passed = false
@@ -307,7 +330,9 @@
         }
         document.getElementById("report").style.display = "block";
         document.getElementById("testDiv").style.display = "none";
-        document.getElementById("After").style.display = "block";
+        if (numberInQuestion != 12) {
+            document.getElementById("After").style.display = "block";
+        }
         document.getElementById("base-timer").style.display = "none";
     }
 
