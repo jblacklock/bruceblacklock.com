@@ -126,15 +126,22 @@
                     style="width: 150px">3</button>
                 <button class="selectButton" type="button" id="Fours" onclick="setPage(4)"
                     style="width: 150px">4</button>
-                <button class="selectButton" type="button" id="Five" onclick="setPage(5)"
+                <button class="selectButton" type="button" id="Fives" onclick="setPage(5)"
                     style="width: 150px">5</button>
-                <button class="selectButton" type="button" id="Six" onclick="setPage(6)" style="width: 150px">6</button>
-                <button class="selectButton" type="button" id="Seven" onclick="setPage(7)"
+                <button class="selectButton" type="button" id="Sixs" onclick="setPage(6)"
+                    style="width: 150px">6</button>
+                <button class="selectButton" type="button" id="Sevens" onclick="setPage(7)"
                     style="width: 150px">7</button>
-                <button class="selectButton" type="button" id="Eight" onclick="setPage(8)"
+                <button class="selectButton" type="button" id="Eights" onclick="setPage(8)"
                     style="width: 150px">8</button>
-                <button class="selectButton" type="button" id="Nine" onclick="setPage(9)"
-                    style="width: 150px">9</button></br>
+                <button class="selectButton" type="button" id="Nines" onclick="setPage(9)"
+                    style="width: 150px">9</button>
+                <button class="selectButton" type="button" id="Tens" onclick="setPage(10)"
+                    style="width: 150px">10</button>
+                <button class="selectButton" type="button" id="Elevens" onclick="setPage(11)"
+                    style="width: 150px">11</button>
+                <button class="selectButton" type="button" id="Twelves" onclick="setPage(12)"
+                    style="width: 150px">12</button>
                 <div id="testDiv" style="display:none;">
                     <div id="app"></div>
                     <div id="QnA">
@@ -142,16 +149,10 @@
                     <input type="text" id="answer"><br>
                     <div id="feedback"></div>
                 </div>
-                <table id="report" style="display:none">
-                    <tr>
-                        <td>Question</td>
-                        <td>You Answered</td>
-                        <td>Correct Answer</td>
-                        <td>Points</td>
-                    </tr>
-                </table>
-                <button class="selectButton" type="button" id="After"
-                    style="width: 150px; display: none;"></button>
+                <div id="tableDIV">
+                </div>
+                <button class="selectButton" type="button" id="After" style="width: 150px; display: none;"
+                    onclick="proceed()"></button>
             </div>
         </div>
     </div>
@@ -168,26 +169,44 @@
     var answer;
     var question;
     var questions = [];
+    var passed;
 
-
+    function proceed() {
+        if (passed == true) {
+            passed = false;
+            numberInQuestion++;
+            setPage(numberInQuestion)
+        }
+        else {
+            setPage(numberInQuestion)
+        }
+    }
 
     function setPage(quizNumber) {
-        console.log(numberInQuestion)
+        console.log("The page is being set! We're on number: " + numberInQuestion);
         numberOfQuestions = 0;
         numberCorrect = 0;
         questions = [];
         timeLeft = 120;
         timePassed = 0;
-       
+
         var divsToHide = document.getElementsByClassName("selectButton"); //divsToHide is an array
         for (var i = 0; i < divsToHide.length; i++) {
             divsToHide[i].style.display = "none"; // depending on what you're doing
         }
-        if(quizNumber != 1000){
-            numberInQuestion = quizNumber;
-        }
-
         
+        numberInQuestion = quizNumber;
+
+        document.getElementById("tableDIV").innerHTML = `
+        <table id="report" style="display:none">
+            <tr>
+                <td>Question</td>
+                <td>You Answered</td>
+                <td>Correct Answer</td>
+                <td>Points</td>
+            </tr>
+        </table>`
+
         nextQuestion();
         document.getElementById("testDiv").style.display = "block";
         document.getElementById("base-timer").style.display = "block";
@@ -202,11 +221,11 @@
     }
 
     function generateNextQuestion() {
-        console.log("This is the number in question: "+numberInQuestion);
+
         while (true) {
             var nextNumber = Math.floor(Math.random() * 10);
             var questionType = Math.floor((Math.random() * 2) + 1);
-            
+
             answer = numberInQuestion * nextNumber
             if (questionType == 1) {
                 question = nextNumber + " x " + numberInQuestion
@@ -218,7 +237,7 @@
                 questions.push(question)
                 return;
             }
-            console.log("You already did " + question + " eh?")
+            // console.log("You already did " + question + " eh?")
         }
 
     }
@@ -264,18 +283,20 @@
         if (numberCorrect >= 14) {
             document.getElementById("feedback").innerHTML = "YOU PASSED WITH " + numberCorrect + "/15"
             document.getElementById("After").innerHTML = "NEXT";
-            numberInQuestion++;
-            document.getElementById("After").addEventListener("click", function () {
-                
-                setPage(1);
-            });
+            passed = true;
+            // document.getElementById("After").addEventListener("click", function () {
+            //     document.getElementById("report").remove();
+            //     setPage(numberInQuestion);
+            // });
         }
         else {
             document.getElementById("feedback").innerHTML = "YOU FAILED: " + numberCorrect + "/15"
             document.getElementById("After").innerHTML = "RETRY";
-            document.getElementById("After").addEventListener("click", function () {
-                setPage(1000);
-            });
+            passed = false
+            // document.getElementById("After").addEventListener("click", function () {
+            //     document.getElementById("report").remove();
+            //     setPage(1000);
+            // });
         }
         document.getElementById("report").style.display = "block";
         document.getElementById("testDiv").style.display = "none";
