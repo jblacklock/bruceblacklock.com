@@ -150,6 +150,7 @@
                     <input type="text" id="answer"><br>
                     <div id="feedback"></div>
                 </div>
+                <div id="result" style="display:none;"></div>
                 <div id="tableDIV">
                 </div>
                 <button class="selectButton" type="button" id="After" style="width: 150px; display: none;"
@@ -184,6 +185,8 @@
     }
 
     function setPage(quizNumber) {
+        document.getElementById("feedback").innerHTML = "";
+        document.getElementById("result").style.display = "none";
         console.log("The page is being set! We're on number: " + numberInQuestion);
         numberOfQuestions = 0;
         numberCorrect = 0;
@@ -202,8 +205,8 @@
         <table id="report" style="display:none">
             <tr>
                 <td>Question</td>
-                <td>You Answered</td>
                 <td>Correct Answer</td>
+                <td>Your Answered</td>
                 <td>Points</td>
             </tr>
         </table>`
@@ -254,8 +257,8 @@
         var cell3 = row.insertCell(2);
         var cell4 = row.insertCell(3);
         cell1.innerHTML = question;
-        cell2.innerHTML = studentAnswer;
-        cell3.innerHTML = answer;
+        cell2.innerHTML = answer;
+        cell3.innerHTML = studentAnswer;
         cell1.className = "reportCell"
         cell2.className = "reportCell"
         cell3.className = "reportCell"
@@ -283,7 +286,8 @@
     function validate() {
         clearInterval(timerInterval);
         if (numberCorrect >= 14) {
-            document.getElementById("feedback").innerHTML = "YOU PASSED WITH " + numberCorrect + "/15 ("+(numberCorrect/numberOfQuestions*100)+"%)" 
+            document.getElementById("result").innerHTML = "YOU PASSED WITH " + numberCorrect + "/15 ("+(numberCorrect/numberOfQuestions*100)+"%) <br> Completion Time: "+timePassed; 
+            document.getElementById("result").style.display = "block";
             document.getElementById("After").innerHTML = "NEXT";
             passed = true;
             // document.getElementById("After").addEventListener("click", function () {
@@ -292,7 +296,8 @@
             // });
         }
         else {
-            document.getElementById("feedback").innerHTML = "YOU FAILED: " + numberCorrect + "/15 ("+(numberCorrect/numberOfQuestions*100)+"%)"
+            document.getElementById("result").innerHTML = "YOU FAILED: " + numberCorrect + "/15 ("+(numberCorrect/numberOfQuestions*100)+"%) <br> Completion Time: "+timePassed;
+            document.getElementById("result").style.display = "block";
             document.getElementById("After").innerHTML = "RETRY";
             passed = false
             // document.getElementById("After").addEventListener("click", function () {
