@@ -307,7 +307,7 @@
         }
         var nexter = numberInQuestion + 1;
         if (numberCorrect >= 14) {
-            document.getElementById("result").innerHTML = "YOU PASSED WITH " + numberCorrect + "/15 (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Completion Time: " + finalTime + "<br> Next time try your " + (nexter) + "s";
+            document.getElementById("result").innerHTML = "YOU PASSED WITH " + numberCorrect + "/15 (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime + "<br> Next time try your " + (nexter) + "s";
             document.getElementById("result").style.display = "block";
 
             document.getElementById("After").innerHTML = "NEXT";
@@ -319,7 +319,7 @@
             // });
         }
         else {
-            document.getElementById("result").innerHTML = "YOU FAILED: " + numberCorrect + "/15 (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Completion Time: " + finalTime;
+            document.getElementById("result").innerHTML = "YOU FAILED: " + numberCorrect + "/15 (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime;
             document.getElementById("result").style.display = "block";
             document.getElementById("After").innerHTML = "RETRY";
             passed = false
