@@ -1,7 +1,7 @@
 <html>
 <link href='navstyle.css' rel='stylesheet'>
 <link href='progressLog.css' rel='stylesheet'>
-<script type="text/javascript" src="horizontalAdjustment.js"></script>
+<!-- <script type="text/javascript" src="horizontalAdjustment.js"></script> -->
 <link href='pageTemplate.css' rel='stylesheet'>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
@@ -64,30 +64,34 @@
     }
 
     .selectButton {
-            display: block;
-            font-size: 1.5em;
-            margin-block-start: 0.83em;
-            margin-inline-start: 0px;
-            margin-inline-end: 0px;
-            font-weight: bold;
-            padding-top: 25px;
-            padding-bottom: 25px;
-            min-width: 135px;
-            position: relative;
-            background-color: grey;
-            width: 40%;
-            display: inline-block;
-            bottom: 10%;
-            text-align: center;
-            border-radius: 8px;
-            cursor: pointer;
-            border: none;
-        }
+        display: block;
+        font-size: 1.5em;
+        margin-block-start: 0.83em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        font-weight: bold;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        min-width: 135px;
+        position: relative;
+        background-color: grey;
+        width: 40%;
+        display: inline-block;
+        bottom: 10%;
+        text-align: center;
+        border-radius: 8px;
+        cursor: pointer;
+        border: none;
+    }
 
-        .selectButton:hover {
-            background-color: purple;
-            color: white;
-        }
+    .selectButton:hover {
+        background-color: purple;
+        color: white;
+    }
+
+    .reportCell {
+        text-align: center;
+    }
 </style>
 
 <head>
@@ -112,21 +116,32 @@
         <div id="topNavBuffer2"></div>
         <div id="notNav">
             <div id="chemistrymap" style="display: block;">
-                <button class="selectButton" type="button" id="Zeroes" onclick="setPage(0)" style="width: 150px"></button>
-                <button class="selectButton" type="button" id="Ones" onclick="setPage(1)" style="width: 150px"></button>
-                <button class="selectButton" type="button" id="Twos" onclick="setPage(2)" style="width: 150px"></button>
-                <button class="selectButton" type="button" id="Threes" onclick="setPage(3)" style="width: 150px"></button>
-                <button class="selectButton" type="button" id="Fours" onclick="setPage(4)" style="width: 150px"></button>
-                <button class="selectButton" type="button" id="Five" onclick="setPage(5)" style="width: 150px"></button>
-                <button class="selectButton" type="button" id="Six" onclick="setPage(6)" style="width: 150px"></button>
-                <button class="selectButton" type="button" id="Seven" onclick="setPage(7)" style="width: 150px"></button>
-                <button class="selectButton" type="button" id="Eight" onclick="setPage(8)" style="width: 150px"></button>
-                <button class="selectButton" type="button" id="Nine" onclick="setPage(9)" style="width: 150px"></button>
-                <div id="app"></div>
-                <div id="QnA">
+                <button class="selectButton" type="button" id="Zeroes" onclick="setPage(0)"
+                    style="width: 150px">0</button>
+                <button class="selectButton" type="button" id="Ones" onclick="setPage(1)"
+                    style="width: 150px">1</button>
+                <button class="selectButton" type="button" id="Twos" onclick="setPage(2)"
+                    style="width: 150px">2</button>
+                <button class="selectButton" type="button" id="Threes" onclick="setPage(3)"
+                    style="width: 150px">3</button>
+                <button class="selectButton" type="button" id="Fours" onclick="setPage(4)"
+                    style="width: 150px">4</button>
+                <button class="selectButton" type="button" id="Five" onclick="setPage(5)"
+                    style="width: 150px">5</button>
+                <button class="selectButton" type="button" id="Six" onclick="setPage(6)" style="width: 150px">6</button>
+                <button class="selectButton" type="button" id="Seven" onclick="setPage(7)"
+                    style="width: 150px">7</button>
+                <button class="selectButton" type="button" id="Eight" onclick="setPage(8)"
+                    style="width: 150px">8</button>
+                <button class="selectButton" type="button" id="Nine" onclick="setPage(9)"
+                    style="width: 150px">9</button></br>
+                <div id="testDiv" style="display:none;">
+                    <div id="app"></div>
+                    <div id="QnA">
+                    </div>
+                    <input type="text" id="answer"><br>
+                    <div id="feedback"></div>
                 </div>
-                <input type="text" id="answer"><br>
-                <div id="feedback"></div>
                 <table id="report" style="display:none">
                     <tr>
                         <td>Question</td>
@@ -135,10 +150,13 @@
                         <td>Points</td>
                     </tr>
                 </table>
+                <button class="selectButton" type="button" id="After"
+                    style="width: 150px; display: none;"></button>
             </div>
         </div>
-
     </div>
+
+
     <div id="bottomBuffer"></div>
     <div id="footer" style="display:block">
     </div>
@@ -146,17 +164,34 @@
 
 
 <script>
-    var numberInQuestion = 5;
+    var numberInQuestion;
     var answer;
     var question;
-    var numberOfQuestions = 0;
-    var numberCorrect = 0;
     var questions = [];
 
-    nextQuestion()
 
-    function setPage(quizNumber){
-        numberInQuestion = quizNumber;
+
+    function setPage(quizNumber) {
+        console.log(numberInQuestion)
+        numberOfQuestions = 0;
+        numberCorrect = 0;
+        questions = [];
+        timeLeft = 120;
+        timePassed = 0;
+       
+        var divsToHide = document.getElementsByClassName("selectButton"); //divsToHide is an array
+        for (var i = 0; i < divsToHide.length; i++) {
+            divsToHide[i].style.display = "none"; // depending on what you're doing
+        }
+        if(quizNumber != 1000){
+            numberInQuestion = quizNumber;
+        }
+
+        
+        nextQuestion();
+        document.getElementById("testDiv").style.display = "block";
+        document.getElementById("base-timer").style.display = "block";
+        startTimer();
     }
 
     function nextQuestion() {
@@ -167,15 +202,17 @@
     }
 
     function generateNextQuestion() {
+        console.log("This is the number in question: "+numberInQuestion);
         while (true) {
             var nextNumber = Math.floor(Math.random() * 10);
             var questionType = Math.floor((Math.random() * 2) + 1);
+            
             answer = numberInQuestion * nextNumber
             if (questionType == 1) {
-                question = nextNumber + " x " + numberInQuestion + " = ?"
+                question = nextNumber + " x " + numberInQuestion
             }
             else {
-                question = numberInQuestion + " x " + nextNumber + " = ?"
+                question = numberInQuestion + " x " + nextNumber
             }
             if (!questions.includes(question)) {
                 questions.push(question)
@@ -198,6 +235,10 @@
         cell1.innerHTML = question;
         cell2.innerHTML = studentAnswer;
         cell3.innerHTML = answer;
+        cell1.className = "reportCell"
+        cell2.className = "reportCell"
+        cell3.className = "reportCell"
+        cell4.className = "reportCell"
 
         if (studentAnswer == answer) {
             document.getElementById("feedback").innerHTML = "CORRECT!"
@@ -219,13 +260,27 @@
     }
 
     function validate() {
+        clearInterval(timerInterval);
         if (numberCorrect >= 14) {
             document.getElementById("feedback").innerHTML = "YOU PASSED WITH " + numberCorrect + "/15"
+            document.getElementById("After").innerHTML = "NEXT";
+            numberInQuestion++;
+            document.getElementById("After").addEventListener("click", function () {
+                
+                setPage(1);
+            });
         }
         else {
             document.getElementById("feedback").innerHTML = "YOU FAILED: " + numberCorrect + "/15"
+            document.getElementById("After").innerHTML = "RETRY";
+            document.getElementById("After").addEventListener("click", function () {
+                setPage(1000);
+            });
         }
         document.getElementById("report").style.display = "block";
+        document.getElementById("testDiv").style.display = "none";
+        document.getElementById("After").style.display = "block";
+        document.getElementById("base-timer").style.display = "none";
     }
 
     document.getElementById("answer").addEventListener("keydown", function (e) {
@@ -238,9 +293,9 @@
 
     // Credit: Mateusz Rybczonec
 
-    const FULL_DASH_ARRAY = 283;
-    const WARNING_THRESHOLD = 30;
-    const ALERT_THRESHOLD = 10;
+    var FULL_DASH_ARRAY = 283;
+    var WARNING_THRESHOLD = 30;
+    var ALERT_THRESHOLD = 10;
 
     const COLOR_CODES = {
         info: {
@@ -256,14 +311,17 @@
         }
     };
 
-    const TIME_LIMIT = 120;
-    let timePassed = 0;
-    let timeLeft = TIME_LIMIT;
-    let timerInterval = null;
-    let remainingPathColor = COLOR_CODES.info.color;
+    var TIME_LIMIT = 120;
+    var timePassed = 0;
+    var timeLeft = TIME_LIMIT;
+    var timerInterval = null;
+    var remainingPathColor = COLOR_CODES.info.color;
 
-    document.getElementById("app").innerHTML = `
-<div class="base-timer">
+    generateTimer()
+
+    function generateTimer() {
+        document.getElementById("app").innerHTML = `
+<div class="base-timer" id="base-timer">
   <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
     <g class="base-timer__circle">
       <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
@@ -281,12 +339,12 @@
     </g>
   </svg>
   <span id="base-timer-label" class="base-timer__label">${formatTime(
-        timeLeft
-    )}</span>
+            timeLeft
+        )}</span>
 </div>
 `;
+    }
 
-    startTimer();
 
     function onTimesUp() {
         clearInterval(timerInterval);
