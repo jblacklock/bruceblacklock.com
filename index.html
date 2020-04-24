@@ -195,7 +195,7 @@
         for (var i = 0; i < divsToHide.length; i++) {
             divsToHide[i].style.display = "none"; // depending on what you're doing
         }
-        
+
         numberInQuestion = quizNumber;
 
         document.getElementById("tableDIV").innerHTML = `
@@ -246,6 +246,7 @@
 
     function checkQuestion() {
         var studentAnswer = document.getElementById("answer").value
+        if (studentAnswer == "") { return; }
         var table = document.getElementById("report");
         var row = table.insertRow(numberOfQuestions)
         var cell1 = row.insertCell(0);
@@ -282,7 +283,7 @@
     function validate() {
         clearInterval(timerInterval);
         if (numberCorrect >= 14) {
-            document.getElementById("feedback").innerHTML = "YOU PASSED WITH " + numberCorrect + "/15"
+            document.getElementById("feedback").innerHTML = "YOU PASSED WITH " + numberCorrect + "/15 ("+(numberCorrect/numberOfQuestions*100)+"%)" 
             document.getElementById("After").innerHTML = "NEXT";
             passed = true;
             // document.getElementById("After").addEventListener("click", function () {
@@ -291,7 +292,7 @@
             // });
         }
         else {
-            document.getElementById("feedback").innerHTML = "YOU FAILED: " + numberCorrect + "/15"
+            document.getElementById("feedback").innerHTML = "YOU FAILED: " + numberCorrect + "/15 ("+(numberCorrect/numberOfQuestions*100)+"%)"
             document.getElementById("After").innerHTML = "RETRY";
             passed = false
             // document.getElementById("After").addEventListener("click", function () {
