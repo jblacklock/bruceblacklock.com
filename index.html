@@ -94,8 +94,8 @@
         text-align: center;
     }
 
-    
-    #report th{
+
+    #report th {
         border-bottom: 3px solid white;
         width: 130px;
     }
@@ -123,32 +123,46 @@
         <div id="topNavBuffer2"></div>
         <div id="notNav">
             <div id="chemistrymap" style="display: block;">
-                <button class="selectButton" type="button" id="Zeroes" onclick="setPage(0)"
-                    style="width: 150px">0</button>
-                <button class="selectButton" type="button" id="Ones" onclick="setPage(1)"
-                    style="width: 150px">1</button>
-                <button class="selectButton" type="button" id="Twos" onclick="setPage(2)"
-                    style="width: 150px">2</button>
-                <button class="selectButton" type="button" id="Threes" onclick="setPage(3)"
-                    style="width: 150px">3</button>
-                <button class="selectButton" type="button" id="Fours" onclick="setPage(4)"
-                    style="width: 150px">4</button>
-                <button class="selectButton" type="button" id="Fives" onclick="setPage(5)"
-                    style="width: 150px">5</button>
-                <button class="selectButton" type="button" id="Sixs" onclick="setPage(6)"
-                    style="width: 150px">6</button>
-                <button class="selectButton" type="button" id="Sevens" onclick="setPage(7)"
-                    style="width: 150px">7</button>
-                <button class="selectButton" type="button" id="Eights" onclick="setPage(8)"
-                    style="width: 150px">8</button>
-                <button class="selectButton" type="button" id="Nines" onclick="setPage(9)"
-                    style="width: 150px">9</button>
-                <button class="selectButton" type="button" id="Tens" onclick="setPage(10)"
-                    style="width: 150px">10</button>
-                <button class="selectButton" type="button" id="Elevens" onclick="setPage(11)"
-                    style="width: 150px">11</button>
-                <button class="selectButton" type="button" id="Twelves" onclick="setPage(12)"
-                    style="width: 150px">12</button>
+                <div id="testOptions">
+                    <button class="selectButton" type="button" id="Zeroes" onclick="setPage(0,0)"
+                        style="width: 150px">0</button>
+                    <button class="selectButton" type="button" id="Ones" onclick="setPage(0,1)"
+                        style="width: 150px">1</button>
+                    <button class="selectButton" type="button" id="Twos" onclick="setPage(0,2)"
+                        style="width: 150px">2</button>
+                    <button class="selectButton" type="button" id="Threes" onclick="setPage(0,3)"
+                        style="width: 150px">3</button>
+                    <button class="selectButton" type="button" id="Fours" onclick="setPage(0,4)"
+                        style="width: 150px">4</button>
+                    <button class="selectButton" type="button" id="Fives" onclick="setPage(0,5)"
+                        style="width: 150px">5</button>
+                    <button class="selectButton" type="button" id="Sixs" onclick="setPage(0,6)"
+                        style="width: 150px">6</button>
+                    <button class="selectButton" type="button" id="Sevens" onclick="setPage(0,7)"
+                        style="width: 150px">7</button>
+                    <button class="selectButton" type="button" id="Eights" onclick="setPage(0,8)"
+                        style="width: 150px">8</button>
+                    <button class="selectButton" type="button" id="Nines" onclick="setPage(0,9)"
+                        style="width: 150px">9</button>
+                    <button class="selectButton" type="button" id="Tens" onclick="setPage(0,10)"
+                        style="width: 150px">10</button>
+                    <button class="selectButton" type="button" id="Elevens" onclick="setPage(0,11)"
+                        style="width: 150px">11</button>
+                    <button class="selectButton" type="button" id="Twelves" onclick="setPage(0,12)"
+                        style="width: 150px">12</button><br><br>
+                    <button class="selectButton" type="button" onclick="setPage(1,1)" style="width: 150px">1</button>
+                    <button class="selectButton" type="button" onclick="setPage(1,2)" style="width: 150px">2</button>
+                    <button class="selectButton" type="button" onclick="setPage(1,3)" style="width: 150px">3</button>
+                    <button class="selectButton" type="button" onclick="setPage(1,4)" style="width: 150px">4</button>
+                    <button class="selectButton" type="button" onclick="setPage(1,5)" style="width: 150px">5</button>
+                    <button class="selectButton" type="button" onclick="setPage(1,6)" style="width: 150px">6</button>
+                    <button class="selectButton" type="button" onclick="setPage(1,7)" style="width: 150px">7</button>
+                    <button class="selectButton" type="button" onclick="setPage(1,8)" style="width: 150px">8</button>
+                    <button class="selectButton" type="button" onclick="setPage(1,9)" style="width: 150px">9</button>
+                    <button class="selectButton" type="button" onclick="setPage(1,10)" style="width: 150px">10</button>
+                    <button class="selectButton" type="button" onclick="setPage(1,11)" style="width: 150px">11</button>
+                    <button class="selectButton" type="button" onclick="setPage(1,12)" style="width: 150px">12</button>
+                </div>
                 <div id="testDiv" style="display:none;">
                     <div id="app"></div>
                     <div id="QnA">
@@ -178,19 +192,18 @@
     var question;
     var questions = [];
     var passed;
+    var quiz;
 
     function proceed() {
         if (passed == true) {
             passed = false;
             numberInQuestion++;
-            setPage(numberInQuestion)
         }
-        else {
-            setPage(numberInQuestion)
-        }
+        setPage(quiz, numberInQuestion)
     }
 
-    function setPage(quizNumber) {
+    function setPage(quizType, quizNumber) {
+        document.getElementById("After").style.display = "none";
         document.getElementById("feedback").innerHTML = "";
         document.getElementById("result").style.display = "none";
         console.log("The page is being set! We're on number: " + numberInQuestion);
@@ -200,11 +213,9 @@
         timeLeft = 120;
         timePassed = 0;
 
-        var divsToHide = document.getElementsByClassName("selectButton"); //divsToHide is an array
-        for (var i = 0; i < divsToHide.length; i++) {
-            divsToHide[i].style.display = "none"; // depending on what you're doing
-        }
+        document.getElementById("testOptions").style.display = "none"; //divsToHide is an array
 
+        quiz = quizType;
         numberInQuestion = quizNumber;
 
         document.getElementById("tableDIV").innerHTML = `
@@ -224,9 +235,9 @@
 
     function nextQuestion() {
         numberOfQuestions++;
-        generateNextQuestion()
+        generateNextQuestion();
         document.getElementById("QnA").innerHTML = question;
-        document.getElementById('answer').value = ''
+        document.getElementById('answer').value = '';
     }
 
     function generateNextQuestion() {
@@ -235,17 +246,30 @@
             var nextNumber = Math.floor(Math.random() * 10);
             var questionType = Math.floor((Math.random() * 2) + 1);
 
-            answer = numberInQuestion * nextNumber
-            if (questionType == 1) {
-                question = nextNumber + " x " + numberInQuestion
+            answer = numberInQuestion * nextNumber;
+
+            if (quiz == 0) {
+                if (questionType == 1) {
+                    question = nextNumber + " x " + numberInQuestion;
+                }
+                else {
+                    question = numberInQuestion + " x " + nextNumber;
+                }
+                if (!questions.includes(question)) {
+                    questions.push(question);
+                    return;
+                }
             }
             else {
-                question = numberInQuestion + " x " + nextNumber
+                question = answer + " / " + numberInQuestion;
+                answer = nextNumber;
+                if (!questions.includes(question)) {
+                    questions.push(question);
+                    return;
+                }
             }
-            if (!questions.includes(question)) {
-                questions.push(question)
-                return;
-            }
+
+
             // console.log("You already did " + question + " eh?")
         }
 
@@ -253,7 +277,7 @@
 
 
     function checkQuestion() {
-        var studentAnswer = document.getElementById("answer").value
+        var studentAnswer = document.getElementById("answer").value;
         if (studentAnswer == "") { return; }
         var table = document.getElementById("report");
         var row = table.insertRow(numberOfQuestions)
@@ -277,7 +301,7 @@
             cell4.innerHTML = "X";
             cell4.style.color = "red";
         }
-        if (numberOfQuestions == 15) {
+        if ((numberOfQuestions == 15 && quiz == 0) || (numberOfQuestions == 10 && quiz == 1)) {
             validate()
         }
         else {
@@ -306,8 +330,8 @@
             finalTime = seconds + " seconds"
         }
         var nexter = numberInQuestion + 1;
-        if (numberCorrect >= 14) {
-            document.getElementById("result").innerHTML = "YOU PASSED WITH " + numberCorrect + "/15 (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime + "<br> Next time try your " + (nexter) + "s";
+        if ((numberCorrect >= 14 && quiz == 0) || (numberCorrect >= 9 && quiz == 1)) {
+            document.getElementById("result").innerHTML = "YOU PASSED WITH " + numberCorrect + "/"+ numberOfQuestions +" (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime + "<br> Next time try your " + (nexter) + "s";
             document.getElementById("result").style.display = "block";
 
             document.getElementById("After").innerHTML = "NEXT";
@@ -319,7 +343,7 @@
             // });
         }
         else {
-            document.getElementById("result").innerHTML = "YOU FAILED: " + numberCorrect + "/15 (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime;
+            document.getElementById("result").innerHTML = "YOU FAILED: " + numberCorrect + "/" + numberOfQuestions + " (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime;
             document.getElementById("result").style.display = "block";
             document.getElementById("After").innerHTML = "RETRY";
             passed = false
