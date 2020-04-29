@@ -149,9 +149,15 @@
         font-size: 400%;
     }
 
-    #questionAnswerFeedback{
+    #questionAnswerFeedback {
         text-align: center;
         margin-top: 50px;
+    }
+
+    #feedback {
+        font-size: 400%;
+        display: inline-block;
+        margin-left: 30px;
     }
 </style>
 
@@ -171,6 +177,15 @@
 </head>
 
 <body>
+
+    <audio id="correct">
+        <source src="correct_1.wav" type="audio/ogg">
+    </audio>
+
+    <audio id="wrong">
+        <source src="wrong.mp3" type="audio/ogg">
+    </audio>
+
     <div id="AllButFooter">
 
 
@@ -228,9 +243,9 @@
                 <div id="testDiv" style="display:none;">
                     <div id="app"></div>
                     <div id="questionAnswerFeedback">
-                    <div id="QnA"></div>
-                    <input type="text" id="answer" size="1"><br>
-                    <div id="feedback"></div>
+                        <div id="QnA"></div>
+                        <input type="text" id="answer" size="1">
+                        <div id="feedback"></div>
                     </div>
                 </div>
                 <div id="result" style="display:none;"></div>
@@ -339,6 +354,8 @@
     }
 
 
+
+
     function checkQuestion() {
         var studentAnswer = document.getElementById("answer").value;
         if (studentAnswer == "") { return; }
@@ -354,13 +371,17 @@
         cell4.className = "reportCell"
 
         if (studentAnswer == answer) {
-            document.getElementById("feedback").innerHTML = "CORRECT!"
+            document.getElementById("feedback").innerHTML = "✓"
+            document.getElementById("feedback").style.color = "green"
+            document.getElementById("correct").play();
             numberCorrect++;
             cell4.innerHTML = "✓";
             cell4.style.color = "green";
         }
         else {
-            document.getElementById("feedback").innerHTML = "WRONG!"
+            document.getElementById("feedback").innerHTML = "X"
+            document.getElementById("feedback").style.color = "red"
+            document.getElementById("wrong").play();
             cell4.innerHTML = "X";
             cell4.style.color = "red";
         }
