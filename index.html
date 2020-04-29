@@ -15,7 +15,10 @@
         position: relative;
         width: 100px;
         height: 100px;
+        margin: auto;
+        padding-top: 20px;
     }
+
 
     .base-timer__svg {
         transform: scaleX(-1);
@@ -61,7 +64,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 16px;
+        font-size: 32px;
+        padding-top: 40px;
     }
 
     .selectButton {
@@ -100,36 +104,54 @@
         width: 130px;
     }
 
-    #mainTitle{
-        font-family: "Comic Sans MS", cursive, sans-serif;
+    #mainTitle {
+        /* font-family: "Comic Sans MS", cursive, sans-serif; */
         font-size: 400%;
         text-align: center;
     }
 
-    #multiplicationTitle{
+    #multiplicationTitle {
 
         font-size: 200%;
     }
 
-    #divisionTitle{
+    #divisionTitle {
         font-size: 200%;
     }
 
-    .prompt
-    {
+    .prompt {
         font-size: 100%;
     }
 
-    #mmImage{
-        vertical-align:middle;
+    #mmImage {
+        vertical-align: middle;
         height: 150px;
         margin-left: 20px;
     }
 
-    #mmImage2{
-        vertical-align:middle;
+    #mmImage2 {
+        vertical-align: middle;
         height: 150px;
         margin-right: 20px;
+    }
+
+    #app {
+        margin: auto;
+    }
+
+    #answer {
+        display: inline-block;
+        font-size: 400%;
+    }
+
+    #QnA {
+        display: inline-block;
+        font-size: 400%;
+    }
+
+    #questionAnswerFeedback{
+        text-align: center;
+        margin-top: 50px;
     }
 </style>
 
@@ -156,9 +178,11 @@
         <div id="notNav">
             <div id="chemistrymap" style="display: block;">
                 <div id="testOptions">
-                    <div id="mainTitle"><img src="http://bruceblacklock.com/MadMinute.png" id="mmImage2">MAD MINUTES!<img src="http://bruceblacklock.com/MadMinute.png" id="mmImage"></div><br>
+                    <div id="mainTitle"><img src="http://bruceblacklock.com/MadMinute.png" id="mmImage2">MAD
+                        MINUTES!<img src="http://bruceblacklock.com/MadMinute.png" id="mmImage"></div><br>
                     <span id="multiplicationTitle">Multiplication</span><br>
-                    <span class="prompt">Choose your multiplication level.</span><br>
+                    <span class="prompt">Choose your multiplication level. You have 2 minutes to solve 15
+                        problems.</span><br>
                     <button class="selectButton" type="button" id="Zeroes" onclick="setPage(0,0)"
                         style="width: 150px">0s</button>
                     <button class="selectButton" type="button" id="Ones" onclick="setPage(0,1)"
@@ -185,9 +209,9 @@
                         style="width: 150px">11s</button>
                     <button class="selectButton" type="button" id="Twelves" onclick="setPage(0,12)"
                         style="width: 150px">12s</button><br><br>
-                        
+
                     <span id="divisionTitle">Division</span><br>
-                    <span class="prompt">Choose your division level.</span><br>
+                    <span class="prompt">Choose your division level. You have 2 minutes to solve 10 problems.</span><br>
                     <button class="selectButton" type="button" onclick="setPage(1,1)" style="width: 150px">1s</button>
                     <button class="selectButton" type="button" onclick="setPage(1,2)" style="width: 150px">2s</button>
                     <button class="selectButton" type="button" onclick="setPage(1,3)" style="width: 150px">3s</button>
@@ -203,10 +227,11 @@
                 </div>
                 <div id="testDiv" style="display:none;">
                     <div id="app"></div>
-                    <div id="QnA">
-                    </div>
-                    <input type="text" id="answer"><br>
+                    <div id="questionAnswerFeedback">
+                    <div id="QnA"></div>
+                    <input type="text" id="answer" size="1"><br>
                     <div id="feedback"></div>
+                    </div>
                 </div>
                 <div id="result" style="display:none;"></div>
                 <div id="tableDIV">
@@ -274,7 +299,7 @@
     function nextQuestion() {
         numberOfQuestions++;
         generateNextQuestion();
-        document.getElementById("QnA").innerHTML = question;
+        document.getElementById("QnA").innerHTML = question + " = ";
         document.getElementById('answer').value = '';
     }
 
@@ -369,7 +394,7 @@
         }
         var nexter = numberInQuestion + 1;
         if ((numberCorrect >= 14 && quiz == 0) || (numberCorrect >= 9 && quiz == 1)) {
-            document.getElementById("result").innerHTML = "YOU PASSED WITH " + numberCorrect + "/"+ numberOfQuestions +" (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime + "<br> Next time try your " + (nexter) + "s";
+            document.getElementById("result").innerHTML = "YOU PASSED WITH " + numberCorrect + "/" + numberOfQuestions + " (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime + "<br> Next time try your " + (nexter) + "s";
             document.getElementById("result").style.display = "block";
 
             document.getElementById("After").innerHTML = "NEXT";
