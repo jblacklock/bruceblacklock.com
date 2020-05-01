@@ -251,6 +251,8 @@
                 <div id="result" style="display:none;"></div>
                 <div id="tableDIV">
                 </div>
+                <button class="selectButton" type="button" id="Before" style="width: 150px; display: none;"
+                    onclick="back()">BACK</button>
                 <button class="selectButton" type="button" id="After" style="width: 150px; display: none;"
                     onclick="proceed()"></button>
             </div>
@@ -278,6 +280,15 @@
             numberInQuestion++;
         }
         setPage(quiz, numberInQuestion)
+    }
+
+    function back() {
+        document.getElementById("After").style.display = "none";
+        document.getElementById("feedback").innerHTML = "";
+        document.getElementById("result").style.display = "none";
+        document.getElementById("report").style.display = "none";
+        document.getElementById("Before").style.display = "none";
+        document.getElementById("testOptions").style.display = "block";
     }
 
     function setPage(quizType, quizNumber) {
@@ -437,9 +448,10 @@
             // });
         }
         document.getElementById("report").style.display = "block";
+        document.getElementById("Before").style.display = "inline-block";
         document.getElementById("testDiv").style.display = "none";
         if (numberInQuestion != 12) {
-            document.getElementById("After").style.display = "block";
+            document.getElementById("After").style.display = "inline-block";
         }
         document.getElementById("base-timer").style.display = "none";
     }
