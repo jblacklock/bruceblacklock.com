@@ -3,7 +3,7 @@
 <link href='progressLog.css' rel='stylesheet'>
 <link href='pageTemplate.css' rel='stylesheet'>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="icon" type="image/png" href="http://bruceblacklock.com/MadMinute.png">
+<link rel="icon" type="image/png" href="https://bruceblacklock.com/MadMinute.png">
 
 <style type="text/css">
     #topNavBuffer2 {
@@ -191,8 +191,8 @@
         <div id="notNav">
             <div id="chemistrymap" style="display: block;">
                 <div id="testOptions">
-                    <div id="mainTitle"><img src="http://bruceblacklock.com/MadMinute.png" id="mmImage2">MAD
-                        MINUTES!<img src="http://bruceblacklock.com/MadMinute.png" id="mmImage"></div><br>
+                    <div id="mainTitle"><img src="https://bruceblacklock.com/MadMinute.png" id="mmImage2">MAD
+                        MINUTES!</div><br>
                     <span id="multiplicationTitle">Multiplication</span><br>
                     <span class="prompt">Choose your multiplication level. You have 2 minutes to solve 15
                         problems.</span><br>
@@ -272,6 +272,22 @@
     var passed;
     var quiz;
 
+    var afterButton = document.getElementById("After");
+    var feedbackDiv = document.getElementById("feedback");
+    var resultDiv = document.getElementById("result");
+    var reportDiv = document.getElementById("report");
+    var beforeButton = document.getElementById("Before");
+    var testOptionsDiv = document.getElementById("testOptions");
+    var testDiv = document.getElementById("testDiv");
+    var baseTimer = document.getElementById("base-timer");
+    var QnADiv = document.getElementById("QnA");
+    var answerInput = document.getElementById('answer');
+    var correctDiv = document.getElementById("correct");
+    var wrongDiv = document.getElementById("wrong");
+    var appTimer = document.getElementById("app");
+    var baseTimerLabel = document.getElementById("base-timer-label");
+    var baseTimerPathRemaining = document.getElementById("base-timer-path-remaining");
+
     function proceed() {
         if (passed == true) {
             passed = false;
@@ -281,18 +297,18 @@
     }
 
     function back() {
-        document.getElementById("After").style.display = "none";
-        document.getElementById("feedback").innerHTML = "";
-        document.getElementById("result").style.display = "none";
+        afterButton.style.display = "none";
+        feedbackDiv.innerHTML = "";
+        resultDiv.style.display = "none";
         document.getElementById("report").style.display = "none";
-        document.getElementById("Before").style.display = "none";
-        document.getElementById("testOptions").style.display = "block";
+        beforeButton.style.display = "none";
+        testOptionsDiv.style.display = "block";
     }
 
     function setPage(quizType, quizNumber) {
-        document.getElementById("After").style.display = "none";
-        document.getElementById("feedback").innerHTML = "";
-        document.getElementById("result").style.display = "none";
+        afterButton.style.display = "none";
+        feedbackDiv.innerHTML = "";
+        resultDiv.style.display = "none";
         console.log("The page is being set! We're on number: " + numberInQuestion);
         numberOfQuestions = 0;
         numberCorrect = 0;
@@ -300,7 +316,7 @@
         timeLeft = 120;
         timePassed = 0;
 
-        document.getElementById("testOptions").style.display = "none"; //divsToHide is an array
+        testOptionsDiv.style.display = "none";
 
         quiz = quizType;
         numberInQuestion = quizNumber;
@@ -315,7 +331,7 @@
         </table>`
 
         nextQuestion();
-        document.getElementById("testDiv").style.display = "block";
+        testDiv.style.display = "block";
         document.getElementById("base-timer").style.display = "block";
         startTimer();
     }
@@ -323,8 +339,8 @@
     function nextQuestion() {
         numberOfQuestions++;
         generateNextQuestion();
-        document.getElementById("QnA").innerHTML = question + " = ";
-        document.getElementById('answer').value = '';
+        QnADiv.innerHTML = question + " = ";
+        answerInput.value = '';
     }
 
     function generateNextQuestion() {
@@ -366,10 +382,9 @@
 
 
     function checkQuestion() {
-        var studentAnswer = document.getElementById("answer").value;
+        var studentAnswer = answerInput.value;
         if (studentAnswer == "") { return; }
-        var table = document.getElementById("report");
-        var row = table.insertRow(numberOfQuestions)
+        var row = document.getElementById("report").insertRow(numberOfQuestions)
         var cell1 = row.insertCell(0);
         var cell3 = row.insertCell(1);
         var cell4 = row.insertCell(2);
@@ -380,17 +395,17 @@
         cell4.className = "reportCell"
 
         if (studentAnswer == answer) {
-            document.getElementById("feedback").innerHTML = "✓"
-            document.getElementById("feedback").style.color = "green"
-            document.getElementById("correct").play();
+            feedbackDiv.innerHTML = "✓"
+            feedbackDiv.style.color = "green"
+            correctDiv.play();
             numberCorrect++;
             cell4.innerHTML = "✓";
             cell4.style.color = "green";
         }
         else {
-            document.getElementById("feedback").innerHTML = "X"
-            document.getElementById("feedback").style.color = "red"
-            document.getElementById("wrong").play();
+            feedbackDiv.innerHTML = "X"
+            feedbackDiv.style.color = "red"
+            wrongDiv.play();
             cell4.innerHTML = "X";
             cell4.style.color = "red";
         }
@@ -424,37 +439,29 @@
         }
         var nexter = numberInQuestion + 1;
         if ((numberCorrect >= 14 && quiz == 0) || (numberCorrect >= 9 && quiz == 1)) {
-            document.getElementById("result").innerHTML = "YOU PASSED WITH " + numberCorrect + "/" + numberOfQuestions + " (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime + "<br> Next time try your " + (nexter) + "s";
-            document.getElementById("result").style.display = "block";
+            resultDiv.innerHTML = "YOU PASSED WITH " + numberCorrect + "/" + numberOfQuestions + " (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime + "<br> Next time try your " + (nexter) + "s";
+            resultDiv.style.display = "block";
 
-            document.getElementById("After").innerHTML = "NEXT";
+            afterButton.innerHTML = "NEXT";
 
             passed = true;
-            // document.getElementById("After").addEventListener("click", function () {
-            //     document.getElementById("report").remove();
-            //     setPage(numberInQuestion);
-            // });
         }
         else {
-            document.getElementById("result").innerHTML = "TRY AGAIN: " + numberCorrect + "/" + numberOfQuestions + " (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime;
-            document.getElementById("result").style.display = "block";
-            document.getElementById("After").innerHTML = "RETRY";
+            resultDiv.innerHTML = "TRY AGAIN: " + numberCorrect + "/" + numberOfQuestions + " (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime;
+            resultDiv.style.display = "block";
+            afterButton.innerHTML = "RETRY";
             passed = false
-            // document.getElementById("After").addEventListener("click", function () {
-            //     document.getElementById("report").remove();
-            //     setPage(1000);
-            // });
         }
         document.getElementById("report").style.display = "block";
-        document.getElementById("Before").style.display = "inline-block";
-        document.getElementById("testDiv").style.display = "none";
+        beforeButton.style.display = "inline-block";
+        testDiv.style.display = "none";
         if (numberInQuestion != 12) {
-            document.getElementById("After").style.display = "inline-block";
+            afterButton.style.display = "inline-block";
         }
         document.getElementById("base-timer").style.display = "none";
     }
 
-    document.getElementById("answer").addEventListener("keydown", function (e) {
+    answerInput.addEventListener("keydown", function (e) {
         if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
             checkQuestion()
         }
@@ -491,9 +498,9 @@
     generateTimer()
 
     function generateTimer() {
-        document.getElementById("app").innerHTML = `
+        appTimer.innerHTML = `
 <div class="base-timer" id="base-timer">
-  <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="https://www.w3.org/2000/svg">
     <g class="base-timer__circle">
       <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
       <path
