@@ -1,0 +1,252 @@
+<html>
+<link href='navstyle.css' rel='stylesheet'>
+<link href='progressLog.css' rel='stylesheet'>
+<link href='pageTemplate.css' rel='stylesheet'>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="icon" type="image/png" href="https://bruceblacklock.com/MadMinute.png">
+
+<style type="text/css">
+    #topNavBuffer2 {
+        height: 77px;
+    }
+
+    .base-timer {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        margin: auto;
+        padding-top: 20px;
+    }
+
+    .base-timer__svg {
+        transform: scaleX(-1);
+    }
+
+    .base-timer__circle {
+        fill: none;
+        stroke: none;
+    }
+
+    .base-timer__path-elapsed {
+        stroke-width: 7px;
+        stroke: grey;
+    }
+
+    .base-timer__path-remaining {
+        stroke-width: 7px;
+        stroke-linecap: round;
+        transform: rotate(90deg);
+        transform-origin: center;
+        transition: 1s linear all;
+        fill-rule: nonzero;
+        stroke: currentColor;
+    }
+
+    .base-timer__path-remaining.green {
+        color: rgb(65, 184, 131);
+    }
+
+    .base-timer__path-remaining.orange {
+        color: orange;
+    }
+
+    .base-timer__path-remaining.red {
+        color: red;
+    }
+
+    .base-timer__label {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        padding-top: 40px;
+    }
+
+    .selectButton {
+        display: block;
+        font-size: 1.5em;
+        margin-block-start: 0.83em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        font-weight: bold;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        min-width: 135px;
+        position: relative;
+        background-color: grey;
+        width: 40%;
+        display: inline-block;
+        bottom: 10%;
+        text-align: center;
+        border-radius: 8px;
+        cursor: pointer;
+        border: none;
+    }
+
+    .selectButton:hover {
+        background-color: purple;
+        color: white;
+    }
+
+    .reportCell {
+        text-align: center;
+    }
+
+
+    #report th {
+        border-bottom: 3px solid white;
+        width: 130px;
+    }
+
+    #mainTitle {
+        /* font-family: "Comic Sans MS", cursive, sans-serif; */
+        font-size: 400%;
+        text-align: center;
+    }
+
+    #multiplicationTitle {
+
+        font-size: 200%;
+    }
+
+    #divisionTitle {
+        font-size: 200%;
+    }
+
+    .prompt {
+        font-size: 100%;
+    }
+
+    #mmImage {
+        vertical-align: middle;
+        height: 150px;
+        margin-left: 20px;
+    }
+
+    #mmImage2 {
+        vertical-align: middle;
+        height: 150px;
+        margin-right: 20px;
+    }
+
+    #app {
+        margin: auto;
+    }
+
+    #answer {
+        display: inline-block;
+        font-size: 400%;
+    }
+
+    #QnA {
+        display: inline-block;
+        font-size: 400%;
+    }
+
+    #questionAnswerFeedback {
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    #feedback {
+        font-size: 400%;
+        display: inline-block;
+        margin-left: 30px;
+    }
+</style>
+
+<head>
+
+    <title>
+        Escape Room
+    </title>
+
+</head>
+
+<body>
+
+
+    <div id="AllButFooter">
+
+
+        <div id="topNavBuffer2"></div>
+        <div id="notNav">
+            <div id="chemistrymap" style="display: block;">
+                <div id="testOptions" style="text-align: center">
+                    <div id="mainTitle">Escape Room</div>
+                    <br>
+                    <div id="passwordWarning"
+                        style="display:none; color: white; width: 100%; text-align:center; position: relative;">
+                        <div style="background-color: #ed4337; width: fit-content; position: relative; margin: 0 auto; padding-left: 40px; padding-right: 40px;">---Wrong Password: Try Again---</div>
+                    </div>
+                    <div id="EscapeSelector" style="margin: 0 auto">
+
+
+                        Enter Password:
+                        <input type="password" id="password" size="1" style="width: 50%">
+                        <br>
+                        <button class="selectButton" type="button" onclick="EnterEscape()"
+                            style="width: 150px">Enter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="bottomBuffer"></div>
+    <div id="footer" style="display:block">
+    </div>
+</body>
+
+<script>
+    var password = document.getElementById("password");
+    var errorMessage = document.getElementById("passwordWarning");
+
+    function EnterEscape() {
+        var link = password.value;
+        errorMessage.style.display = "none";
+        switch (link) {
+            case "Easter":
+                window.location.href = "EscapeEaster.html";
+                break;
+            case "NorthPole":
+                window.location.href = "EscapeNorthPole.html";
+                break;
+            case "Thanksgiving":
+                window.location.href = "EscapeThanksgiving.html";
+                break;
+            case "DeepBlue":
+                window.location.href = "EscapeDeepBlue.html";
+                break;
+            case "DesertedIsland":
+                window.location.href = "EscapeIsland.html";
+                break;
+            case "HauntedHouse":
+                window.location.href = "EscapeHauntedHouse.html";
+                break;
+            case "Library":
+                window.location.href = "EscapeLibrary.html";
+                break;
+            case "TimeMachine":
+                window.location.href = "EscapeTimeMachine.html";
+                break;
+            case "VideoGame":
+                window.location.href = "EscapeVideoGames.html";
+                break;
+            case "Zoo":
+                window.location.href = "EscapeZoo.html";
+                break;
+            case "Valentines":
+                window.location.href = "EscapeValentines.html";
+                break;
+            default:
+                password.value = "";
+                errorMessage.style.display = "block";
+        }
+    }
+</script>
+
+</html>
