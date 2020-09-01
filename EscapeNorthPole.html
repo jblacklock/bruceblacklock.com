@@ -1,0 +1,170 @@
+<html>
+<link href='navstyle.css' rel='stylesheet'>
+<link href='progressLog.css' rel='stylesheet'>
+<link href='pageTemplate.css' rel='stylesheet'>
+<link href='EscapeRoom.css' rel='stylesheet'>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="icon" type="image/png" href="https://bruceblacklock.com/MadMinute.png">
+
+<head>
+
+    <title>
+        Escape Rooms
+    </title>
+</head>
+
+<body onload="setTitleAndImage()">
+
+    <audio id="correct">
+        <source src="correct_1.wav" type="audio/ogg">
+    </audio>
+    <audio id="wrong">
+        <source src="wrong.mp3" type="audio/ogg">
+    </audio>
+
+    <div id="AllButFooter">
+        <div id="notNav">
+            <div id="chemistrymap" style="display: block;">
+                <div id="testOptions" style="text-align: center">
+                    <div id="mainTitle"></div>
+                    <div>(If you enter three wrong answers, you will have to start again at the beginning)</div>
+                    <br>
+                    <img id="mainImage" style="width:80%">
+                    <div id="Xsection" style="margin-top: 15px; margin-bottom: 15px;"></div>
+                    <div id="answerDiv" style="display: none;">
+                        <br>
+                        Answer:
+                        <input type="text" id="answer" size="1" style="width: 50%" onkeyup="SubmitAnswer(this)">
+                    </div>
+                    <div id="nextDiv" style="display: block;">
+                        <button class="selectButton" type="button" style="width: 150px" onclick="nextSlide()">Next
+                        </button>
+                    </div>
+                    <div id="homeDiv" style="display: none;">
+                        <a href="index.html">
+                            <button class="selectButton" type="button" style="width: 150px">Back
+                            </button>
+                        </a>
+                    </div>
+                    <div id="restartDiv" style="display: none;">
+                        <button class="selectButton" type="button" style="width: 150px"
+                            onclick="nextSlide(), restart()">Try Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    // #####################################################################################
+    // TEACHERS: YOU ONLY HAVE TO WORRY ABOUT THE FOLLOWING LINES
+
+    // VARIABLES
+    // Step 1: Set the title of the page (replace the stuff within the quotation marks)
+    var pageTitle = "Escape from the North Pole"
+
+
+    // Step 2: Each slide in the slideshow needs to be converted into an image.
+    // add name of the image to the list below (Be sure to list the slides in order). 
+    // You can add as many or as few slides as you would like.  
+    var imageArray = ["NP1.png", "NP2.png", "NP3.png", "NP4.png", "NP5.png", "NP6.png", "NP7.png"];
+    
+    
+    // Step 3: Write the page # of the slides which have questions  
+    var slidesWithQuestionsArray = [3, 4, 5, 6];
+    
+    
+    // Step 4: For each question, add all acceptable answers to this list. 
+    // Be sure to add the acceptable answers in the order that their question appears.
+    var answerArray = [["42"], ["49"], ["56"], ["63"]];
+    
+    
+    // Step 5: Add the image of the failure slide
+    var gameOverImage = "NP8.png"
+
+
+    // DON'T WORRY ABOUT ANYTHING AFTER THIS
+    // #####################################################################################
+
+    var slideNumber = 1;
+    var questionNumber = 1;
+    var answerInput = document.getElementById("answer");
+    var nextDiv = document.getElementById("nextDiv");
+    var answerDiv = document.getElementById("answerDiv");
+    var ImageDiv = document.getElementById("mainImage");
+    var RestartDiv = document.getElementById("restartDiv");
+    var incorrectAnswers = 0;
+
+    function SubmitAnswer(element) {
+        if (event.key === 'Enter') {
+            CheckAnswer(element.value)
+        }
+    }
+
+    function nextSlide() {
+        answerDiv.style.display = "none";
+        nextDiv.style.display = "none";
+        restartDiv.style.display = "none";
+        ImageDiv.src = imageArray[slideNumber]
+        if (slidesWithQuestionsArray.includes(slideNumber + 1)) {
+            answerDiv.style.display = "block";
+        }
+        else {
+            if (slideNumber <= imageArray.length - 2) {
+                nextDiv.style.display = "block";
+            }
+            else {
+                document.getElementById("homeDiv").style.display = "block";
+            }
+        }
+        slideNumber++;
+    }
+
+
+    function CheckAnswer(answer) {
+        if (answerArray[questionNumber - 1].includes(answer)) {
+            questionNumber++;
+            answerInput.value = '';
+            nextSlide();
+            correct.play();
+            return;
+        }
+        else {
+            wrong.play();
+            var img = document.createElement("img");
+            img.src = "Xes.png";
+            img.style.width = "50px";
+            img.style.height = "50px";
+            var src = document.getElementById("Xsection");
+            src.appendChild(img);
+            incorrectAnswers++;
+            console.log(incorrectAnswers);
+            if (incorrectAnswers > 2) {
+                questionNumber = 1;
+                incorrectAnswers = 0;
+                slideNumber = 0;
+                answerInput.value = '';
+                ImageDiv.src = gameOverImage;
+                answerDiv.style.display = "none";
+                nextDiv.style.display = "none";
+                RestartDiv.style.display = "block";
+                return;
+            }
+        }
+    }
+
+    function restart() {
+        document.getElementById("Xsection").innerHTML = "";
+    }
+
+    function setTitleAndImage() {
+        document.title = pageTitle;
+        document.getElementById("mainTitle").innerHTML = pageTitle;
+        ImageDiv.src = imageArray[0];
+    }
+</script>
+
+</html>
