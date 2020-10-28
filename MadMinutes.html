@@ -435,7 +435,11 @@
         }
         var nexter = numberInQuestion + 1;
         if ((numberCorrect >= 14 && quiz == 0) || (numberCorrect >= 9 && quiz == 1)) {
-            resultDiv.innerHTML = "YOU PASSED WITH " + numberCorrect + "/" + numberOfQuestions + " (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime + "<br> Next time try your " + (nexter) + "s";
+            verificationOne = (Math.floor(Math.random() * 100))*10; 
+            even = [0,2,4,6,8];
+            randomEven = Math.floor(Math.random() * even.length);
+            cerificationCode = verificationOne + even[randomEven];
+            resultDiv.innerHTML = "YOU PASSED WITH " + numberCorrect + "/" + numberOfQuestions + " (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime + "<br> Next time try your " + (nexter) + "s <br> Verification Code: "+ cerificationCode;
             resultDiv.style.display = "block";
 
             afterButton.innerHTML = "NEXT";
@@ -443,7 +447,11 @@
             passed = true;
         }
         else {
-            resultDiv.innerHTML = "TRY AGAIN: " + numberCorrect + "/" + numberOfQuestions + " (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime;
+            verificationOne = (Math.floor(Math.random() * 100))*10;
+            odd = [1,3,5,7,9];
+            randomOdd = Math.floor(Math.random() * odd.length);
+            cerificationCode = verificationOne + odd[randomOdd];
+            resultDiv.innerHTML = "TRY AGAIN: " + numberCorrect + "/" + numberOfQuestions + " (" + (Math.round(numberCorrect / numberOfQuestions * 100)) + "%) <br> Time: " + finalTime + "<br> Verification Code: "+ cerificationCode;
             resultDiv.style.display = "block";
             afterButton.innerHTML = "RETRY";
             passed = false
