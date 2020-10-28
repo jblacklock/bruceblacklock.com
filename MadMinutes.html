@@ -434,7 +434,7 @@
             finalTime = seconds + " seconds"
         }
         var nexter = numberInQuestion + 1;
-        verificationCode = (Math.floor(Math.random() * 1000))*10; 
+        verificationCode = Math.floor(Math.random() * 1000); 
         if ((numberCorrect >= 14 && quiz == 0) || (numberCorrect >= 9 && quiz == 1)) {
             if(verificationCode % 2 != 0){
                 verificationCode--;
