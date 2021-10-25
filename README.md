@@ -1,5 +1,3 @@
-![image](https://user-images.githubusercontent.com/21204409/138620873-1393b558-1374-495d-91c9-9201cf7c7409.png)
-
 BruceBlacklock.com is a website for educator Bruce Blacklock. Currently it features a math testing web app for elementary school students confined to remote learning due to COVID-19.
 
 ![image](https://user-images.githubusercontent.com/21204409/138620948-c7aa14ca-7f0b-4079-8cba-ea5cc63d7c94.png)
