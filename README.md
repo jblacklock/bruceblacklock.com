@@ -6,6 +6,6 @@ BruceBlacklock.com is a website for educator Bruce Blacklock. Currently it featu
 
 ![image](https://user-images.githubusercontent.com/21204409/138620967-9b8258ad-1c5e-464c-a95e-c6f7ee9a35e8.png)
 
-![image](https://user-images.githubusercontent.com/21204409/138620994-84a1dace-3a0e-4b75-a7f0-51f51d2926a1.png)
+![image](https://user-images.githubusercontent.com/21204409/138621113-f3c9f1ee-284e-4cd2-ba24-91c28ba62cc5.png)
 
 ![image](https://user-images.githubusercontent.com/21204409/138621023-c9217ad7-bd2b-44e0-9b83-b97ff7160d8c.png)
